@@ -10,12 +10,30 @@ using Serilog;
 using DotNetEnv;
 
 Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("StrictCORS", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // Puerto EXACTO de Vite
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .SetIsOriginAllowedToAllowWildcardSubdomains();
+    });
+});
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>(); 
+}
+
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
-
 
 builder.Host.UseSerilog();
 
@@ -78,7 +96,29 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// Endpoint de verificación de salud
+app.MapGet("/api/health", () =>
+{
+    Log.Information("Solicitud recibida en /api/health");
+    return Results.Ok(new
+    {
+        status = "healthy",
+        timestamp = DateTime.UtcNow,
+        version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString()
+    });
+});
+
+app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    Log.Information($"Recibida solicitud: {context.Request.Method} {context.Request.Path}");
+    await next();
+    Log.Information($"Respuesta enviada: {context.Response.StatusCode}");
+});
+
+app.UseCors("StrictCORS");
+
 app.UseAuthorization();
 app.MapControllers();
 

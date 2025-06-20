@@ -236,3 +236,4 @@ C:\Users\darly\source\repos\Fact\bin\Debug\net9.0\Serilog.Sinks.Debug.dll
 C:\Users\darly\source\repos\Fact\bin\Debug\net9.0\Serilog.Sinks.File.dll
 C:\Users\darly\source\repos\Fact\bin\Debug\net9.0\Sprache.dll
 C:\Users\darly\source\repos\Fact\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\darly\source\repos\Fact\obj\Debug\net9.0\Fact.sourcelink.json

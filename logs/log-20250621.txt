@@ -1,0 +1,689 @@
+2025-06-21 10:51:48 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 10:52:01 [Information] Executed DbCommand ("132"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 10:52:02 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 10:52:03 [Information] Executed DbCommand ("619"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 10:52:04 [Information] Executed DbCommand ("45"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 10:52:04 [Information] Executed DbCommand ("41"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 10:52:05 [Information] Executed DbCommand ("31"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 10:52:07 [Information] Executed DbCommand ("449"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 10:52:07 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 10:52:07 [Information] Executed DbCommand ("257"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 10:52:10 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 10:52:10 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 10:52:11 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 10:52:11 [Information] Hosting environment: "Development"
+2025-06-21 10:52:11 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 10:54:23 [Information] Executed DbCommand ("1,967"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Clientes] ([Direccion], [Email], [Nombre], [Telefono])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);"
+2025-06-21 10:54:41 [Information] Executed DbCommand ("29"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Nombre], [c].[Email], [c].[Telefono], [c].[Direccion]
+FROM [Clientes] AS [c]"
+2025-06-21 11:01:05 [Information] Executed DbCommand ("157"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Productos] ([Descripcion], [ImagenUrl], [Nombre], [Precio])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);"
+2025-06-21 11:01:28 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[Nombre], [p].[Descripcion], [p].[Precio], [p].[ImagenUrl]
+FROM [Productos] AS [p]"
+2025-06-21 11:01:52 [Error] Error inesperado al crear factura
+System.InvalidOperationException: Failed to convert configuration value at 'SmtpSettings:Port' to type 'System.Int32'.
+ ---> System.ArgumentException: ${SMTP_PORT} is not a valid value for Int32. (Parameter 'value')
+ ---> System.FormatException: The input string '${SMTP_PORT}' was not in a correct format.
+   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
+   at System.Int32.Parse(String s, NumberStyles style, IFormatProvider provider)
+   at System.ComponentModel.Int32Converter.FromString(String value, NumberFormatInfo formatInfo)
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   --- End of inner exception stack trace ---
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.TryConvertValue(Type type, String value, String path, Object& result, Exception& error)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperty(PropertyInfo property, Object instance, IConfiguration config, BinderOptions options)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperties(Object instance, IConfiguration configuration, BinderOptions options, ParameterInfo[] constructorParameters)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(IConfiguration configuration, Object instance, Action`1 configureOptions)
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Fact.Features.Facturas.Services.EmailSender..ctor(IOptions`1 smtpSettings) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 15
+   at InvokeStub_EmailSender..ctor(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitDisposeCache(ServiceCallSite transientCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 11:02:36 [Error] Error inesperado al crear factura
+System.InvalidOperationException: Failed to convert configuration value at 'SmtpSettings:Port' to type 'System.Int32'.
+ ---> System.ArgumentException: ${SMTP_PORT} is not a valid value for Int32. (Parameter 'value')
+ ---> System.FormatException: The input string '${SMTP_PORT}' was not in a correct format.
+   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
+   at System.Int32.Parse(String s, NumberStyles style, IFormatProvider provider)
+   at System.ComponentModel.Int32Converter.FromString(String value, NumberFormatInfo formatInfo)
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   --- End of inner exception stack trace ---
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.TryConvertValue(Type type, String value, String path, Object& result, Exception& error)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperty(PropertyInfo property, Object instance, IConfiguration config, BinderOptions options)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperties(Object instance, IConfiguration configuration, BinderOptions options, ParameterInfo[] constructorParameters)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(IConfiguration configuration, Object instance, Action`1 configureOptions)
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Fact.Features.Facturas.Services.EmailSender..ctor(IOptions`1 smtpSettings) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 15
+   at InvokeStub_EmailSender..ctor(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitDisposeCache(ServiceCallSite transientCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 11:27:16 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 11:27:20 [Information] Executed DbCommand ("77"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 11:27:20 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 11:27:20 [Information] Executed DbCommand ("122"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 11:27:20 [Information] Executed DbCommand ("19"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 11:27:20 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 11:27:20 [Information] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 11:27:20 [Information] Executed DbCommand ("231"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 11:27:20 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 11:27:21 [Information] Executed DbCommand ("69"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 11:27:22 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 11:27:22 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 11:27:24 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 11:27:24 [Information] Hosting environment: "Development"
+2025-06-21 11:27:24 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 11:30:19 [Error] Error inesperado al crear factura
+System.InvalidOperationException: Failed to convert configuration value at 'SmtpSettings:Port' to type 'System.Int32'.
+ ---> System.ArgumentException: ${SMTP_PORT} is not a valid value for Int32. (Parameter 'value')
+ ---> System.FormatException: The input string '${SMTP_PORT}' was not in a correct format.
+   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
+   at System.Int32.Parse(String s, NumberStyles style, IFormatProvider provider)
+   at System.ComponentModel.Int32Converter.FromString(String value, NumberFormatInfo formatInfo)
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   --- End of inner exception stack trace ---
+   at System.ComponentModel.BaseNumberConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.TryConvertValue(Type type, String value, String path, Object& result, Exception& error)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperty(PropertyInfo property, Object instance, IConfiguration config, BinderOptions options)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindProperties(Object instance, IConfiguration configuration, BinderOptions options, ParameterInfo[] constructorParameters)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(IConfiguration configuration, Object instance, Action`1 configureOptions)
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Fact.Features.Facturas.Services.EmailSender..ctor(IOptions`1 smtpSettings) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 15
+   at InvokeStub_EmailSender..ctor(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 11:33:28 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 11:33:34 [Information] Executed DbCommand ("112"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 11:33:34 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 11:33:34 [Information] Executed DbCommand ("200"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 11:33:34 [Information] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 11:33:34 [Information] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 11:33:34 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 11:33:34 [Information] Executed DbCommand ("59"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 11:33:34 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 11:33:35 [Information] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 11:33:36 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 11:33:36 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 11:33:37 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 11:33:37 [Information] Hosting environment: "Development"
+2025-06-21 11:33:37 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 11:35:01 [Information] Executed DbCommand ("435"ms) [Parameters=["@__request_ClienteId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [c].[Id], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+FROM [Clientes] AS [c]
+WHERE [c].[Id] = @__request_ClienteId_0"
+2025-06-21 11:35:01 [Information] Executed DbCommand ("44"ms) [Parameters=["@__item_ProductoId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+FROM [Productos] AS [p]
+WHERE [p].[Id] = @__item_ProductoId_0"
+2025-06-21 11:35:02 [Information] Executed DbCommand ("145"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Facturas] ([ClienteId], [Fecha], [Total])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);"
+2025-06-21 11:35:02 [Information] Executed DbCommand ("70"ms) [Parameters=["@p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DetallesFactura] ([Cantidad], [FacturaId], [PrecioUnitario], [ProductoId])
+OUTPUT INSERTED.[Id]
+VALUES (@p3, @p4, @p5, @p6);"
+2025-06-21 11:35:03 [Information] Executed DbCommand ("101"ms) [Parameters=["@__factura_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[ClienteId], [s].[Fecha], [s].[Total], [s].[Id0], [s].[Direccion], [s].[Email], [s].[Nombre], [s].[Telefono], [s0].[Id], [s0].[Cantidad], [s0].[FacturaId], [s0].[PrecioUnitario], [s0].[ProductoId], [s0].[Id0], [s0].[Descripcion], [s0].[ImagenUrl], [s0].[Nombre], [s0].[Precio]
+FROM (
+    SELECT TOP(1) [f].[Id], [f].[ClienteId], [f].[Fecha], [f].[Total], [c].[Id] AS [Id0], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+    FROM [Facturas] AS [f]
+    INNER JOIN [Clientes] AS [c] ON [f].[ClienteId] = [c].[Id]
+    WHERE [f].[Id] = @__factura_Id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[Cantidad], [d].[FacturaId], [d].[PrecioUnitario], [d].[ProductoId], [p].[Id] AS [Id0], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+    FROM [DetallesFactura] AS [d]
+    INNER JOIN [Productos] AS [p] ON [d].[ProductoId] = [p].[Id]
+) AS [s0] ON [s].[Id] = [s0].[FacturaId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]"
+2025-06-21 11:35:19 [Error] Error inesperado al crear factura
+System.UriFormatException: Invalid URI: The hostname could not be parsed.
+   at System.Uri.CreateThis(String uri, Boolean dontEscape, UriKind uriKind, UriCreationOptions& creationOptions)
+   at System.Uri..ctor(String uriString)
+   at MailKit.Net.Smtp.SmtpClient.ComputeDefaultValues(String host, Int32& port, SecureSocketOptions& options, Uri& uri, Boolean& starttls)
+   at MailKit.Net.Smtp.SmtpClient.ConnectAsync(String host, Int32 port, SecureSocketOptions options, CancellationToken cancellationToken)
+   at Fact.Features.Facturas.Services.EmailSender.SendFacturaEmailAsync(String email, String nombreCliente, FacturaDto factura, Byte[] pdfBytes) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 55
+   at Fact.Features.Facturas.Commands.Handlers.CreateFacturaHandler.Handle(CreateFacturaCommand request, CancellationToken cancellationToken) in C:\Users\darly\source\repos\Fact\Features\Facturas\Commands\Handlers\CreateFacturaHandler.cs:line 95
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 12:09:29 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 12:09:33 [Information] Executed DbCommand ("88"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 12:09:33 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 12:09:33 [Information] Executed DbCommand ("181"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 12:09:34 [Information] Executed DbCommand ("76"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 12:09:34 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 12:09:34 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 12:09:35 [Information] Executed DbCommand ("91"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 12:09:35 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 12:09:35 [Information] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 12:09:37 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 12:09:37 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 12:09:37 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 12:09:37 [Information] Hosting environment: "Development"
+2025-06-21 12:09:37 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 12:11:03 [Warning] Argumento inválido al crear factura
+System.ArgumentException: Usuario SMTP no configurado
+   at Fact.Features.Facturas.Services.EmailSender..ctor(IOptions`1 smtpSettings) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 97
+   at InvokeStub_EmailSender..ctor(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 12:22:10 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 12:22:18 [Information] Executed DbCommand ("115"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 12:22:19 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 12:22:19 [Information] Executed DbCommand ("212"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 12:22:19 [Information] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 12:22:19 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 12:22:19 [Information] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 12:22:19 [Information] Executed DbCommand ("96"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 12:22:19 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 12:22:19 [Information] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 12:22:21 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 12:22:21 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 12:22:22 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 12:22:22 [Information] Hosting environment: "Development"
+2025-06-21 12:22:22 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 12:24:14 [Warning] Argumento inválido al crear factura
+System.ArgumentException: Usuario SMTP no configurado
+   at Fact.Features.Facturas.Services.EmailSender..ctor(IOptions`1 smtpSettings) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 97
+   at InvokeStub_EmailSender..ctor(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 13:58:45 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 13:58:57 [Information] Executed DbCommand ("75"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 13:58:57 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 13:58:58 [Information] Executed DbCommand ("127"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 13:58:58 [Information] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 13:58:58 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 13:58:58 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 13:58:58 [Information] Executed DbCommand ("84"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 13:58:58 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 13:58:58 [Information] Executed DbCommand ("11"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 13:59:00 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 13:59:00 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 13:59:02 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 13:59:02 [Information] Hosting environment: "Development"
+2025-06-21 13:59:03 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 14:02:23 [Information] Executed DbCommand ("380"ms) [Parameters=["@__request_ClienteId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [c].[Id], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+FROM [Clientes] AS [c]
+WHERE [c].[Id] = @__request_ClienteId_0"
+2025-06-21 14:02:24 [Information] Executed DbCommand ("29"ms) [Parameters=["@__item_ProductoId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+FROM [Productos] AS [p]
+WHERE [p].[Id] = @__item_ProductoId_0"
+2025-06-21 14:02:25 [Information] Executed DbCommand ("62"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Facturas] ([ClienteId], [Fecha], [Total])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);"
+2025-06-21 14:02:25 [Information] Executed DbCommand ("21"ms) [Parameters=["@p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DetallesFactura] ([Cantidad], [FacturaId], [PrecioUnitario], [ProductoId])
+OUTPUT INSERTED.[Id]
+VALUES (@p3, @p4, @p5, @p6);"
+2025-06-21 14:02:26 [Information] Executed DbCommand ("81"ms) [Parameters=["@__factura_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[ClienteId], [s].[Fecha], [s].[Total], [s].[Id0], [s].[Direccion], [s].[Email], [s].[Nombre], [s].[Telefono], [s0].[Id], [s0].[Cantidad], [s0].[FacturaId], [s0].[PrecioUnitario], [s0].[ProductoId], [s0].[Id0], [s0].[Descripcion], [s0].[ImagenUrl], [s0].[Nombre], [s0].[Precio]
+FROM (
+    SELECT TOP(1) [f].[Id], [f].[ClienteId], [f].[Fecha], [f].[Total], [c].[Id] AS [Id0], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+    FROM [Facturas] AS [f]
+    INNER JOIN [Clientes] AS [c] ON [f].[ClienteId] = [c].[Id]
+    WHERE [f].[Id] = @__factura_Id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[Cantidad], [d].[FacturaId], [d].[PrecioUnitario], [d].[ProductoId], [p].[Id] AS [Id0], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+    FROM [DetallesFactura] AS [d]
+    INNER JOIN [Productos] AS [p] ON [d].[ProductoId] = [p].[Id]
+) AS [s0] ON [s].[Id] = [s0].[FacturaId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]"
+2025-06-21 14:02:37 [Error] Error inesperado al crear factura
+System.Exception: Error al enviar el email con la factura
+ ---> System.Net.Sockets.SocketException (11001): Host desconocido.
+   at System.Net.NameResolutionPal.ProcessResult(SocketError errorCode, GetAddrInfoExContext* context)
+   at System.Net.NameResolutionPal.GetAddressInfoExCallback(Int32 error, Int32 bytes, NativeOverlapped* overlapped)
+--- End of stack trace from previous location ---
+   at System.Net.Dns.<GetAddrInfoWithTelemetryAsync>g__CompleteAsync|34_0[T](Task task, String hostName, Int64 startingTimeStamp)
+   at MailKit.Net.SocketUtils.ConnectAsync(String host, Int32 port, IPEndPoint localEndPoint, CancellationToken cancellationToken)
+   at MailKit.Net.SocketUtils.ConnectAsync(String host, Int32 port, IPEndPoint localEndPoint, Int32 timeout, CancellationToken cancellationToken)
+   at MailKit.MailService.ConnectNetworkAsync(String host, Int32 port, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.ConnectAsync(String host, Int32 port, SecureSocketOptions options, CancellationToken cancellationToken)
+   at Fact.Features.Facturas.Services.EmailSender.SendFacturaEmailAsync(String email, String nombreCliente, FacturaDto factura, Byte[] pdfBytes) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 155
+   --- End of inner exception stack trace ---
+   at Fact.Features.Facturas.Services.EmailSender.SendFacturaEmailAsync(String email, String nombreCliente, FacturaDto factura, Byte[] pdfBytes) in C:\Users\darly\source\repos\Fact\Features\Facturas\Services\EmailSender.cs:line 169
+   at Fact.Features.Facturas.Commands.Handlers.CreateFacturaHandler.Handle(CreateFacturaCommand request, CancellationToken cancellationToken) in C:\Users\darly\source\repos\Fact\Features\Facturas\Commands\Handlers\CreateFacturaHandler.cs:line 95
+   at Fact.Controllers.FacturasController.Create(CreateFacturaCommand command) in C:\Users\darly\source\repos\Fact\Controllers\FacturasController.cs:line 33
+2025-06-21 14:11:45 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 14:11:53 [Information] Executed DbCommand ("107"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 14:11:53 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 14:11:53 [Information] Executed DbCommand ("315"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 14:11:54 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 14:11:54 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 14:11:54 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 14:11:54 [Information] Executed DbCommand ("117"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 14:11:54 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 14:11:54 [Information] Executed DbCommand ("81"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 14:11:57 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 14:11:57 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 14:11:58 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 14:11:58 [Information] Hosting environment: "Development"
+2025-06-21 14:11:58 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 14:17:51 [Information] Executed DbCommand ("346"ms) [Parameters=["@__request_ClienteId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [c].[Id], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+FROM [Clientes] AS [c]
+WHERE [c].[Id] = @__request_ClienteId_0"
+2025-06-21 14:17:51 [Information] Executed DbCommand ("37"ms) [Parameters=["@__item_ProductoId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+FROM [Productos] AS [p]
+WHERE [p].[Id] = @__item_ProductoId_0"
+2025-06-21 14:17:52 [Information] Executed DbCommand ("131"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Facturas] ([ClienteId], [Fecha], [Total])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);"
+2025-06-21 14:17:52 [Information] Executed DbCommand ("19"ms) [Parameters=["@p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DetallesFactura] ([Cantidad], [FacturaId], [PrecioUnitario], [ProductoId])
+OUTPUT INSERTED.[Id]
+VALUES (@p3, @p4, @p5, @p6);"
+2025-06-21 14:17:53 [Information] Executed DbCommand ("109"ms) [Parameters=["@__factura_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[ClienteId], [s].[Fecha], [s].[Total], [s].[Id0], [s].[Direccion], [s].[Email], [s].[Nombre], [s].[Telefono], [s0].[Id], [s0].[Cantidad], [s0].[FacturaId], [s0].[PrecioUnitario], [s0].[ProductoId], [s0].[Id0], [s0].[Descripcion], [s0].[ImagenUrl], [s0].[Nombre], [s0].[Precio]
+FROM (
+    SELECT TOP(1) [f].[Id], [f].[ClienteId], [f].[Fecha], [f].[Total], [c].[Id] AS [Id0], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+    FROM [Facturas] AS [f]
+    INNER JOIN [Clientes] AS [c] ON [f].[ClienteId] = [c].[Id]
+    WHERE [f].[Id] = @__factura_Id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[Cantidad], [d].[FacturaId], [d].[PrecioUnitario], [d].[ProductoId], [p].[Id] AS [Id0], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+    FROM [DetallesFactura] AS [d]
+    INNER JOIN [Productos] AS [p] ON [d].[ProductoId] = [p].[Id]
+) AS [s0] ON [s].[Id] = [s0].[FacturaId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]"
+2025-06-21 14:45:40 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 14:45:45 [Information] Executed DbCommand ("69"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 14:45:46 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 14:45:46 [Information] Executed DbCommand ("275"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 14:45:46 [Information] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 14:45:46 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 14:45:46 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 14:45:46 [Information] Executed DbCommand ("101"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 14:45:46 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 14:45:46 [Information] Executed DbCommand ("35"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 14:45:48 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 14:45:48 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 14:45:50 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 14:45:50 [Information] Hosting environment: "Development"
+2025-06-21 14:45:50 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 14:48:10 [Information] Executed DbCommand ("249"ms) [Parameters=["@__request_ClienteId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [c].[Id], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+FROM [Clientes] AS [c]
+WHERE [c].[Id] = @__request_ClienteId_0"
+2025-06-21 14:48:11 [Information] Executed DbCommand ("34"ms) [Parameters=["@__item_ProductoId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+FROM [Productos] AS [p]
+WHERE [p].[Id] = @__item_ProductoId_0"
+2025-06-21 14:48:11 [Information] Executed DbCommand ("62"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Facturas] ([ClienteId], [Fecha], [Total])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);"
+2025-06-21 14:48:11 [Information] Executed DbCommand ("77"ms) [Parameters=["@p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DetallesFactura] ([Cantidad], [FacturaId], [PrecioUnitario], [ProductoId])
+OUTPUT INSERTED.[Id]
+VALUES (@p3, @p4, @p5, @p6);"
+2025-06-21 14:48:12 [Information] Executed DbCommand ("108"ms) [Parameters=["@__factura_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[ClienteId], [s].[Fecha], [s].[Total], [s].[Id0], [s].[Direccion], [s].[Email], [s].[Nombre], [s].[Telefono], [s0].[Id], [s0].[Cantidad], [s0].[FacturaId], [s0].[PrecioUnitario], [s0].[ProductoId], [s0].[Id0], [s0].[Descripcion], [s0].[ImagenUrl], [s0].[Nombre], [s0].[Precio]
+FROM (
+    SELECT TOP(1) [f].[Id], [f].[ClienteId], [f].[Fecha], [f].[Total], [c].[Id] AS [Id0], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+    FROM [Facturas] AS [f]
+    INNER JOIN [Clientes] AS [c] ON [f].[ClienteId] = [c].[Id]
+    WHERE [f].[Id] = @__factura_Id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[Cantidad], [d].[FacturaId], [d].[PrecioUnitario], [d].[ProductoId], [p].[Id] AS [Id0], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+    FROM [DetallesFactura] AS [d]
+    INNER JOIN [Productos] AS [p] ON [d].[ProductoId] = [p].[Id]
+) AS [s0] ON [s].[Id] = [s0].[FacturaId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]"
+2025-06-21 15:16:45 [Warning] No store type was specified for the decimal property '"Total"' on entity type '"Factura"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-21 15:16:52 [Information] Executed DbCommand ("3,363"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 15:16:52 [Information] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-06-21 15:16:52 [Information] Executed DbCommand ("155"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+2025-06-21 15:16:53 [Information] Executed DbCommand ("28"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+2025-06-21 15:16:53 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+2025-06-21 15:16:53 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+2025-06-21 15:16:53 [Information] Executed DbCommand ("127"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+2025-06-21 15:16:53 [Information] No migrations were applied. The database is already up to date.
+2025-06-21 15:16:53 [Information] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+2025-06-21 15:16:55 [Information] Now listening on: "https://localhost:7120"
+2025-06-21 15:16:55 [Information] Now listening on: "http://localhost:5295"
+2025-06-21 15:16:56 [Information] Application started. Press Ctrl+C to shut down.
+2025-06-21 15:16:56 [Information] Hosting environment: "Development"
+2025-06-21 15:16:56 [Information] Content root path: "C:\Users\darly\source\repos\Fact"
+2025-06-21 15:24:34 [Information] Executed DbCommand ("651"ms) [Parameters=["@__request_ClienteId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [c].[Id], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+FROM [Clientes] AS [c]
+WHERE [c].[Id] = @__request_ClienteId_0"
+2025-06-21 15:24:34 [Information] Executed DbCommand ("31"ms) [Parameters=["@__item_ProductoId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+FROM [Productos] AS [p]
+WHERE [p].[Id] = @__item_ProductoId_0"
+2025-06-21 15:24:36 [Information] Executed DbCommand ("508"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Facturas] ([ClienteId], [Fecha], [Total])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);"
+2025-06-21 15:24:36 [Information] Executed DbCommand ("28"ms) [Parameters=["@p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DetallesFactura] ([Cantidad], [FacturaId], [PrecioUnitario], [ProductoId])
+OUTPUT INSERTED.[Id]
+VALUES (@p3, @p4, @p5, @p6);"
+2025-06-21 15:24:37 [Information] Executed DbCommand ("218"ms) [Parameters=["@__factura_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[ClienteId], [s].[Fecha], [s].[Total], [s].[Id0], [s].[Direccion], [s].[Email], [s].[Nombre], [s].[Telefono], [s0].[Id], [s0].[Cantidad], [s0].[FacturaId], [s0].[PrecioUnitario], [s0].[ProductoId], [s0].[Id0], [s0].[Descripcion], [s0].[ImagenUrl], [s0].[Nombre], [s0].[Precio]
+FROM (
+    SELECT TOP(1) [f].[Id], [f].[ClienteId], [f].[Fecha], [f].[Total], [c].[Id] AS [Id0], [c].[Direccion], [c].[Email], [c].[Nombre], [c].[Telefono]
+    FROM [Facturas] AS [f]
+    INNER JOIN [Clientes] AS [c] ON [f].[ClienteId] = [c].[Id]
+    WHERE [f].[Id] = @__factura_Id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[Cantidad], [d].[FacturaId], [d].[PrecioUnitario], [d].[ProductoId], [p].[Id] AS [Id0], [p].[Descripcion], [p].[ImagenUrl], [p].[Nombre], [p].[Precio]
+    FROM [DetallesFactura] AS [d]
+    INNER JOIN [Productos] AS [p] ON [d].[ProductoId] = [p].[Id]
+) AS [s0] ON [s].[Id] = [s0].[FacturaId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]"

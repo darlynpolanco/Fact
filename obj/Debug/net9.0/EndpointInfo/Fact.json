@@ -5,7 +5,7 @@
     "description": "API para gestión de clientes, productos y facturas",
     "contact": {
       "name": "Soporte Técnico",
-      "email": "soporte@facturacion.com"
+      "email": "facturandocompany@gmail.com"
     },
     "version": "v1"
   },
@@ -308,6 +308,18 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Fact"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
