@@ -125,6 +125,17 @@ Sigue estos pasos:
 5. Abre un Pull Request
 
 ---
+## Configuración SMTP
+
+- **Host**: `smtp.gmail.com` (ejemplo)
+- **Puerto**: `587` (TLS)
+- **Credenciales**: 
+  - Usar "contraseña de aplicación" si es Gmail
+  - Configurar via `dotnet user-secrets` en desarrollo
+- **Errores comunes**:
+  - "Host desconocido": Verificar DNS o conexión a internet
+  - "Autenticación fallida": Revisar contraseña y usuario
+---
 
 ## 📄 Licencia
 
