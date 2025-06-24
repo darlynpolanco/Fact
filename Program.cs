@@ -1,13 +1,14 @@
-using System.Reflection;
+using DotNetEnv;
 using Fact.Data;
 using Fact.Features.Facturas.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using DotNetEnv;
+using System.Reflection;
 
 Env.Load();
 
@@ -30,6 +31,8 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddSingleton<SmtpSettings>(sp =>
+    sp.GetRequiredService<IOptions<SmtpSettings>>().Value);
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
